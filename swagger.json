@@ -1,0 +1,341 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "1.0.0",
+		"title": "Trakinvest",
+		"description": "Node JS(Express) APIs for trakinvest assignment",
+		"license": {
+			"name": "MIT",
+			"url": "https://opensource.org/licenses/MIT"
+		}
+	},
+	"host": "localhost:3000",
+	"basePath": "/api",
+	"tags": [
+		{
+			"name": "department",
+			"description": "API for departments"
+		},
+		{
+			"name": "employee",
+			"description": "API for employees"
+		}
+	],
+	"schemes": ["https", "http"],
+	"paths": {
+		"/department/add": {
+			"post": {
+				"tags": ["department"],
+				"summary": "add department",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"required": true,
+						"description": "department details",
+						"schema": {
+							"$ref": "#/definitions/Employee"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "New department is created",
+						"schema": {
+							"type": "object",
+							"example": { "id": "d87e8588-271b-42d7-82d6-667d4e90a6bf" }
+						}
+					},
+					"400": {
+						"description": "Adding new department failed"
+					}
+				}
+			}
+		},
+		"/departments": {
+			"get": {
+				"tags": ["department"],
+				"summary": "get departments",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Get departments",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Department"
+							}
+						}
+					},
+					"400": {
+						"description": "Failed to get departments"
+					}
+				}
+			}
+		},
+
+		"/department/{id}/delete": {
+			"delete": {
+				"tags": ["department"],
+				"summary": "create department",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"description": "id of the department"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Department is deleted",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"400": {
+						"description": "Failed to delete department"
+					}
+				}
+			}
+		},
+		"/employee/add": {
+			"post": {
+				"tags": ["employee"],
+				"summary": "add an employee",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"required": true,
+						"description": "employee details",
+						"schema": {
+							"$ref": "#/definitions/Employee"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "New employee is added",
+						"schema": {
+							"type": "object",
+							"example": { "id": "f87e8588-271b-42d7-82d6-667d4e90a6ae" }
+						}
+					},
+					"409": {
+						"description": "Employee with email id is already exists"
+					},
+					"400": {
+						"description": "Adding new employee failed"
+					}
+				}
+			}
+		},
+		"/employees": {
+			"get": {
+				"tags": ["employee"],
+				"summary": "get employees",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Get employees",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Employee"
+							}
+						}
+					},
+					"400": {
+						"description": "Failed to get employees"
+					}
+				}
+			}
+		},
+		"/employees/{id}/update": {
+			"put": {
+				"tags": ["employee"],
+				"summary": "update employee department",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "employee id"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Employee details is updated",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"400": {
+						"description": "Failed to update employee details"
+					}
+				}
+			}
+		},
+		"/employees/sort": {
+			"post": {
+				"tags": ["employee"],
+				"summary": "sort employees",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "sort_by",
+						"in": "body",
+						"description": "field to sort employees",
+						"schema": {
+							"type": "sort_by",
+							"example": "email"
+						},
+						"required": true
+					},
+					{
+						"name": "sort_type",
+						"in": "body",
+						"description": "sort type",
+						"schema": {
+							"type": "string",
+							"example": "DESC",
+							"enum": ["ASC", "DESC"]
+						},
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Employees sorted",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Employee"
+							}
+						}
+					},
+					"400": {
+						"description": "Unable to sort employees"
+					}
+				}
+			}
+		},
+		"/employee/search": {
+			"post": {
+				"tags": ["employee"],
+				"summary": "search for employees",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "search_term",
+						"in": "body",
+						"description": "term to search",
+						"schema": {
+							"type": "search_term",
+							"example": "haf"
+						},
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Search result",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Employee"
+							}
+						}
+					},
+					"400": {
+						"description": "Unable to search employees"
+					}
+				}
+			}
+		},
+		"/employee/{id}/delete": {
+			"delete": {
+				"tags": ["employee"],
+				"summary": "delete employee",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id of employee",
+						"schema": {
+							"type": "string"
+						},
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Employee deleted",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"400": {
+						"description": "Failed to delete employee"
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"Department": {
+			"required": ["id", "name", "code", "created_on"],
+			"properties": {
+				"id": {
+					"type": "string",
+					"example": "f87e8588-271b-42d7-82d6-667d4e90a6ae"
+				},
+				"name": {
+					"type": "string",
+					"example": "Computer Science"
+				},
+				"created_on": {
+					"type": "date",
+					"example": "27-05-2021"
+				}
+			}
+		},
+		"Employee": {
+			"required": ["id", "email", "name", "created_on"],
+			"properties": {
+				"id": {
+					"type": "string",
+					"example": "f87e8588-271b-42d7-82d6-667d4e90a6ae"
+				},
+				"email": {
+					"type": "string",
+					"example": "hafeezulkareem20@gmail.com"
+				},
+				"name": {
+					"type": "string",
+					"example": "Anil Kumar"
+				},
+				"department": {
+					"type": "string",
+					"example": "c67e8588-271b-42d7-82d6-667d4e90a7be"
+				}
+			}
+		}
+	}
+}
