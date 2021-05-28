@@ -6,7 +6,7 @@ Coding Assignment for TrakLabs Bootcamp
 - PostgreSQL
 - Node JS
 
-- To init the Database, run the following SQL Commands
+#### To init the Database, run the following SQL Commands
 
 1. Creating the DB
 
